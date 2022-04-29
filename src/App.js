@@ -12,7 +12,7 @@ const RESPONSE_TYPE = "token"
 
 function App() {
 
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState("")
 
   useEffect(() => {
     const hash = window.location.hash
@@ -28,14 +28,21 @@ function App() {
 
     setToken(token)
 
-}, [])
+  }, [])
 
-
+  const logout = () => {
+    setToken("")
+    window.localStorage.removeItem("token")
+  }
 
   return (
     <div className="App">
       <header className="App-header">
-      <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}>Login to Spotify</a>
+        { !token ?  
+          <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}>Login to Spotify</a>
+          :
+          <button onClick={logout}> Logout </button>  
+        }
       </header>
     </div>
   );
