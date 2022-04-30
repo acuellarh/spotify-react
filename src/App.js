@@ -1,5 +1,6 @@
 import './App.css';
 import {useEffect, useState} from 'react';
+import axios from 'axios';
 
 
 const CLIENT_ID = "da41273bb2444d84a74e22c37b8e4554"
@@ -9,10 +10,11 @@ const RESPONSE_TYPE = "token"
 
 
 
-
 function App() {
 
   const [token, setToken] = useState("")
+  const [searchKey, setSearchKey] = useState("");
+  const [artists, setArtists] = useState([]);
 
   useEffect(() => {
     const hash = window.location.hash
@@ -35,15 +37,38 @@ function App() {
     window.localStorage.removeItem("token")
   }
 
+  const searchArtists = async (e) => {
+    e.preventDefault()
+    const {data} = await axios.get("https://api.spotify.com/v1/search", {
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+        params: {
+            q: searchKey,
+            type: "artist"
+        }
+    })
+
+    setArtists(data.artists.items)
+}
+
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="">
+    
+      <header className="">
         { !token ?  
           <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}>Login to Spotify</a>
           :
-          <button onClick={logout}> Logout </button>  
+          <button onClick={logout}> Logout </button>           
         }
       </header>
+
+        <form onSubmit={searchArtists}>
+          <input type="text" onChange={e => setSearchKey(e.target.value)}/>
+          <button type={"submit"}>Search</button>
+        </form>       
+   
+
     </div>
   );
 }
