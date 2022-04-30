@@ -18,7 +18,6 @@ function App() {
 
   useEffect(() => {
     const hash = window.location.hash
-    //#access_token=BQD-4Qy25wHCNdE2GRfGKwVPY5OOfxLVyVbR08w5KsFT84svfYbn_cyU_UGba9QfcKVMaaEMo6moyTYdYJHtEuN38ixoppCoV8DGDTNd9gpUFlo3W6LDB_TcXbmuYvZOUFQJKWQsf_PJv5F8W8CaJXa3FIJDUgM&token_type=Bearer&expires_in=3600
     let token = window.localStorage.getItem("token")
 
     if (!token && hash) {
@@ -50,7 +49,16 @@ function App() {
     })
 
     setArtists(data.artists.items)
-}
+ }
+
+ const renderArtists = () => {
+   console.log(artists)
+   return artists.map( artist => (
+    <div key={setArtists.id}> 
+      {artist.name}
+    </div>
+   ))
+ }
 
   return (
     <div className="">
@@ -66,7 +74,9 @@ function App() {
         <form onSubmit={searchArtists}>
           <input type="text" onChange={e => setSearchKey(e.target.value)}/>
           <button type={"submit"}>Search</button>
-        </form>       
+        </form>  
+
+        {renderArtists()}     
    
 
     </div>
