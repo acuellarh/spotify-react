@@ -1,6 +1,8 @@
 import './App.css';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
+import { Navbar } from './components/Navbar';
+import { Search } from './components/Search';
 
 
 const CLIENT_ID = "da41273bb2444d84a74e22c37b8e4554"
@@ -62,20 +64,21 @@ function App() {
  }
 
   return (
-    <div className="">
-    
-      <header className="">
-        { !token ?  
-          <a href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}>Login to Spotify</a>
-          :
-          <button onClick={logout}> Logout </button>           
-        }
-      </header>
+    <div className="container">
 
-        <form onSubmit={searchArtists}>
-          <input type="text" onChange={e => setSearchKey(e.target.value)}/>
-          <button type={"submit"}>Search</button>
-        </form>  
+      <Navbar
+        token = {token}
+        AUTH_ENDPOINT = {AUTH_ENDPOINT}
+        CLIENT_ID = {CLIENT_ID}
+        REDIRECT_URI = {REDIRECT_URI}
+        RESPONSE_TYPE = {RESPONSE_TYPE}
+        logout = {logout}
+      /> 
+
+      <Search
+        setSearchKey={setSearchKey}
+        searchArtists={searchArtists}
+      /> 
 
         {renderArtists()}     
    
