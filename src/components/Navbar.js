@@ -1,7 +1,7 @@
 export const Navbar = (
   {token, AUTH_ENDPOINT, CLIENT_ID, REDIRECT_URI, RESPONSE_TYPE, logout}) => {
   return ( 
-    <div class="container">
+    <div className="container">
       <nav className="navbar navbar-light bg-light">
         <div className="container-fluid">
           <a className="navbar-brand">Spotify </a>

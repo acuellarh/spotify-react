@@ -3,14 +3,12 @@ import {useEffect, useState} from 'react';
 import axios from 'axios';
 import { Navbar } from './components/Navbar';
 import { Search } from './components/Search';
-
+import { Artists } from './components/Artists';
 
 const CLIENT_ID = "da41273bb2444d84a74e22c37b8e4554"
 const REDIRECT_URI = "http://localhost:3000"
 const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
 const RESPONSE_TYPE = "token"
-
-
 
 function App() {
 
@@ -51,20 +49,11 @@ function App() {
     })
 
     console.log(data)
-
     setArtists(data.artists.items)
  }
 
- const renderArtists = () => {   
-   return artists.map( artist => (
-    <div key={artist.id}> 
-      {artist.name}
-    </div>
-   ))
- }
-
   return (
-    <div className="">
+    <div className="container">
 
       <Navbar
         token = {token}
@@ -78,10 +67,16 @@ function App() {
       <Search
         setSearchKey={setSearchKey}
         searchArtists={searchArtists}
-      /> 
-
-        {renderArtists()}     
-   
+      />      
+      <section className="row justify-content-sm-center row-cols-auto">
+        {artists.map(({id, images, name})=>
+          <Artists
+            key={id}
+            images={images}
+            name={name}
+          />
+        )}
+      </section>   
 
     </div>
   );
