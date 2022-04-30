@@ -64,7 +64,7 @@ function App() {
  }
 
   return (
-    <div className="container">
+    <div className="">
 
       <Navbar
         token = {token}
