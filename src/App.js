@@ -44,17 +44,18 @@ function App() {
         },
         params: {
             q: searchKey,
-            type: "artist"
+            type: "artist"                         
         }
     })
+
+    console.log(data)
 
     setArtists(data.artists.items)
  }
 
- const renderArtists = () => {
-   console.log(artists)
+ const renderArtists = () => {   
    return artists.map( artist => (
-    <div key={setArtists.id}> 
+    <div key={artist.id}> 
       {artist.name}
     </div>
    ))
