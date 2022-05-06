@@ -69,11 +69,12 @@ function App() {
         searchArtists={searchArtists}
       />      
       <section className="row justify-content-sm-center row-cols-auto">
-        {artists.map(({id, images, name})=>
+        {artists.map(({id, images, name, followers})=>
           <Artists
             key={id}
             images={images}
             name={name}
+            followers={followers}
           />
         )}
       </section>   
