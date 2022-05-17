@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Navbar } from './components/Navbar';
 import { Search } from './components/Search';
 import { Artists } from './components/Artists';
+import { Pagination } from './components/Pagination';
 
 const CLIENT_ID = "da41273bb2444d84a74e22c37b8e4554"
 const REDIRECT_URI = "http://localhost:3000"
@@ -15,6 +16,12 @@ function App() {
   const [token, setToken] = useState("")
   const [searchKey, setSearchKey] = useState("");
   const [artists, setArtists] = useState([]);
+  const [offset, setOffset] = useState("");
+  const [total, setTotal] = useState("");
+  const [limit, setLimit] = useState();
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState();
+
 
   useEffect(() => {
     const hash = window.location.hash
@@ -49,6 +56,10 @@ function App() {
     })
 
     console.log(data)
+    setPage(1)
+    setLimit(data.artists.limit)
+    setTotal(data.artists.total)
+    setOffset(data.artists.offset)
     setArtists(data.artists.items)
  }
 
@@ -67,7 +78,21 @@ function App() {
       <Search
         setSearchKey={setSearchKey}
         searchArtists={searchArtists}
-      />      
+      />  
+
+      <section className="row justify-content-sm-center row-cols-auto">
+          <Pagination
+            total={total}
+            offset={offset}
+            limit={limit}
+            setPage={setPage}
+            page={page}
+            artists={artists}
+            setTotalPages={setTotalPages}
+            totalPages={totalPages}
+          />
+      </section> 
+
       <section className="row justify-content-sm-center row-cols-auto">
         {artists.map(({id, images, name, followers})=>
           <Artists
@@ -78,6 +103,10 @@ function App() {
           />
         )}
       </section>   
+
+ 
+
+
 
     </div>
   );
