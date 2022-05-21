@@ -43,25 +43,31 @@ function App() {
     window.localStorage.removeItem("token")
   }
 
+
+
   const searchArtists = async (e) => {
     e.preventDefault()
     const {data} = await axios.get("https://api.spotify.com/v1/search", {
+  //    const {data} = await axios.get("https://api.spotify.com/v1/search?query=balvin&type=artist&locale=en-US%2Cen%3Bq%3D0.9&offset=20&limit=20", {
         headers: {
             Authorization: `Bearer ${token}`
         },
         params: {
-            q: searchKey,
-            type: "artist"                         
+          q: searchKey,
+          type: "artist"                            
         }
     })
 
+
+
     console.log(data)
+    setArtists(data.artists.items)
     setPage(1)
     setLimit(data.artists.limit)
     setTotal(data.artists.total)
     setOffset(data.artists.offset)
-    setArtists(data.artists.items)
- }
+   
+  }
 
   return (
     <div className="container">
@@ -80,18 +86,23 @@ function App() {
         searchArtists={searchArtists}
       />  
 
-      <section className="row justify-content-sm-center row-cols-auto">
-          <Pagination
-            total={total}
-            offset={offset}
-            limit={limit}
-            setPage={setPage}
-            page={page}
-            artists={artists}
-            setTotalPages={setTotalPages}
-            totalPages={totalPages}
-          />
-      </section> 
+      {artists.length>0 ? 
+      
+        <section className="row justify-content-sm-center row-cols-auto">
+            <Pagination
+              total={total}
+              offset={offset}
+              limit={limit}
+              setPage={setPage}
+              page={page}
+              artists={artists}
+              setTotalPages={setTotalPages}
+              totalPages={totalPages}
+            />
+        </section> 
+        : 
+        <p>Type any artist</p>
+      } 
 
       <section className="row justify-content-sm-center row-cols-auto">
         {artists.map(({id, images, name, followers})=>

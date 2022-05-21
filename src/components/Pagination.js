@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import { useEffect } from "react"
 
 export const Pagination = ({total, offset, limit, setPage, page, artists,setTotalPages, totalPages}) => { 
 
@@ -10,13 +10,15 @@ export const Pagination = ({total, offset, limit, setPage, page, artists,setTota
     setPage(page + next)
   }
 
-  let remainder = total % limit
-
-  remainder===0 ? setTotalPages(parseInt(total / limit )) :  setTotalPages(parseInt(total / limit ) + 1) 
-
+  const cuantityPages = () => {    
+    let remainder = total % limit  
+    let numberPages = parseInt(total / limit )
+    remainder===0 ? setTotalPages(numberPages) :  setTotalPages(numberPages + 1) 
+  }  
+  
   useEffect(() => {
-
-  }, [])
+    cuantityPages()    
+  }, [total]);
 
 
   return (
