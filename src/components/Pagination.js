@@ -1,13 +1,22 @@
 import { useEffect } from "react"
 
-export const Pagination = ({total, offset, limit, setPage, page, artists,setTotalPages, totalPages}) => { 
+export const Pagination = ({
+  total,
+  limit,
+  setPage,
+  page,
+  setTotalPages,
+  totalPages,
+  previous,
+  next, 
+  fetchPaginationArtist }) => { 
 
-  const onChange = (next) => {
+  const onChange = (value) => {
+    if(value<0 && page + value <= 0) return
+    if(value>0 && page >= totalPages) return
+    setPage(page + value)   
 
-    if(next<0 && page + next <= 0) return
-    if(next>0 && page >= totalPages) return
-
-    setPage(page + next)
+    value === 1 ? fetchPaginationArtist(next) : fetchPaginationArtist(previous)
   }
 
   const cuantityPages = () => {    
@@ -15,9 +24,10 @@ export const Pagination = ({total, offset, limit, setPage, page, artists,setTota
     let numberPages = parseInt(total / limit )
     remainder===0 ? setTotalPages(numberPages) :  setTotalPages(numberPages + 1) 
   }  
+
   
   useEffect(() => {
-    cuantityPages()    
+    cuantityPages()        
   }, [total]);
 
 

@@ -13,14 +13,15 @@ const RESPONSE_TYPE = "token"
 
 function App() {
 
-  const [token, setToken] = useState("")
+  const [token, setToken] = useState("") 
   const [searchKey, setSearchKey] = useState("");
-  const [artists, setArtists] = useState([]);
-  const [offset, setOffset] = useState("");
+  const [artists, setArtists] = useState([]); 
   const [total, setTotal] = useState("");
   const [limit, setLimit] = useState();
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState();
+  const [next, setNext] = useState("");
+  const [previous, setPrevious] = useState("");
 
 
   useEffect(() => {
@@ -45,29 +46,60 @@ function App() {
 
 
 
-  const searchArtists = async (e) => {
-    e.preventDefault()
-    const {data} = await axios.get("https://api.spotify.com/v1/search", {
-  //    const {data} = await axios.get("https://api.spotify.com/v1/search?query=balvin&type=artist&locale=en-US%2Cen%3Bq%3D0.9&offset=20&limit=20", {
-        headers: {
-            Authorization: `Bearer ${token}`
-        },
-        params: {
-          q: searchKey,
-          type: "artist"                            
-        }
-    })
+  const searchArtists = async () => {
 
+    try {       
+        const {data} = await axios.get( "https://api.spotify.com/v1/search" , {
+          headers: {
+              Authorization: `Bearer ${token}`
+          },
+          params: {
+            q: searchKey,
+            type: "artist"                            
+          }
+        })
 
+        console.log(data)
+        setArtists(data.artists.items)  
+        setPage(1)
+        setLimit(data.artists.limit)
+        setTotal(data.artists.total)
+        setNext(data.artists.next)
+        setPrevious(data.artists.previous)   
 
-    console.log(data)
-    setArtists(data.artists.items)
-    setPage(1)
-    setLimit(data.artists.limit)
-    setTotal(data.artists.total)
-    setOffset(data.artists.offset)
    
+    } catch (error) {
+      console.error(error)
+    }
+
   }
+
+
+  const fetchPaginationArtist = async (url) => {
+
+    try {       
+       
+        const {data} = await axios.get( url , {
+          headers: {
+              Authorization: `Bearer ${token}`
+          },
+          params: {            
+            type: "artist"                            
+          }
+        })
+
+        console.log(data)
+        setArtists(data.artists.items)          
+        setNext(data.artists.next)
+        setPrevious(data.artists.previous)   
+
+   
+    } catch (error) {
+      console.error(error)
+    }
+
+  }
+  
 
   return (
     <div className="container">
@@ -90,14 +122,15 @@ function App() {
       
         <section className="row justify-content-sm-center row-cols-auto">
             <Pagination
-              total={total}
-              offset={offset}
+              total={total}            
               limit={limit}
               setPage={setPage}
-              page={page}
-              artists={artists}
+              page={page}             
               setTotalPages={setTotalPages}
               totalPages={totalPages}
+              previous={previous}
+              next={next}              
+              fetchPaginationArtist={fetchPaginationArtist}
             />
         </section> 
         : 
@@ -113,11 +146,7 @@ function App() {
             followers={followers}
           />
         )}
-      </section>   
-
- 
-
-
+      </section>
 
     </div>
   );

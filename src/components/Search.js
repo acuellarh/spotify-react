@@ -3,9 +3,9 @@ export const Search =  ({setSearchKey, searchArtists}) => {
     <>
       <div className="container">
         <div className="row">
-          <div className="col mt-4 mb-4">          
-
-            <form className="d-flex justify-content-center" onSubmit={searchArtists}> 
+          <div className="col mt-4 mb-4">
+                       
+            <form className="d-flex justify-content-center" onSubmit={() => searchArtists()}> 
                 <input             
                   type="search" 
                   placeholder="Search" 
