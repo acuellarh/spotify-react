@@ -65,13 +65,11 @@ function App() {
         setLimit(data.artists.limit)
         setTotal(data.artists.total)
         setNext(data.artists.next)
-        setPrevious(data.artists.previous)   
-
+        setPrevious(data.artists.previous)
    
     } catch (error) {
       console.error(error)
-    }
-
+    }    
   }
 
 
@@ -81,7 +79,7 @@ function App() {
        
         const {data} = await axios.get( url , {
           headers: {
-              Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`
           },
           params: {            
             type: "artist"                            
@@ -91,13 +89,27 @@ function App() {
         console.log(data)
         setArtists(data.artists.items)          
         setNext(data.artists.next)
-        setPrevious(data.artists.previous)   
-
+        setPrevious(data.artists.previous)
    
     } catch (error) {
       console.error(error)
     }
+  }
 
+  const fetchArtistAlbums = async (id) => {
+    try {
+      
+      const {data} = await axios.get (`https://api.spotify.com/v1/artists/${id}/albums` , {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }     
+      })
+
+      console.log(data)
+
+    } catch (error) {
+      console.error(error)
+    }
   }
   
 
@@ -144,6 +156,8 @@ function App() {
             images={images}
             name={name}
             followers={followers}
+            id={id}
+            fetchArtistAlbums={fetchArtistAlbums}
           />
         )}
       </section>
