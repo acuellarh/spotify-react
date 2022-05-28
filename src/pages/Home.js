@@ -9,7 +9,7 @@ export const Home = () => {
     <>
       <Search/>
       {/* <Pagination/> */}
-      {/* <Artists/> */}
+      <Artists/>
     </>
   )
 }

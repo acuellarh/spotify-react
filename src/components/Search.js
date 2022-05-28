@@ -27,21 +27,6 @@ export const Search =  () => {
             </form>
           </div>       
         </div>  
-
-        <section className="row justify-content-sm-center row-cols-auto">
-
-          {artists.map(({images, name, followers, id}) => 
-
-          <Artists
-          key={id}
-          images={images}
-          name={name}
-          followers={followers}
-          id={id}                               
-          />  
-
-          )}
-        </section>
       </div>
     </>
   )
