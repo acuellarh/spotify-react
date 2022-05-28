@@ -1,5 +1,10 @@
-export const Navbar = (
-  {token, AUTH_ENDPOINT, CLIENT_ID, REDIRECT_URI, RESPONSE_TYPE, logout}) => {
+import React, { useContext} from "react"
+import { ArtistsContext } from "../context/ArtistsContext"
+
+export const Navbar = () => {
+
+  const {token, AUTH_ENDPOINT, CLIENT_ID, REDIRECT_URI, RESPONSE_TYPE, logout} = useContext(ArtistsContext)
+    
   return ( 
     <div className="container">
       <nav className="navbar navbar-light bg-light">

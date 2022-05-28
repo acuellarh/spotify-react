@@ -1,4 +1,10 @@
-export const Search =  ({setSearchKey, searchArtists}) => {
+import React, {useContext} from "react"
+import { ArtistsContext } from "../context/ArtistsContext"
+
+export const Search =  () => {
+  
+  const {setSearchKey, searchArtists} = useContext(ArtistsContext)
+
   return (
     <>
       <div className="container">

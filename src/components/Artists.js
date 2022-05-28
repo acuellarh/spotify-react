@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+
+
 export const Artists = ({images, name, followers, id, fetchArtistAlbums }) => {
   return (
     <div className="my-1">
@@ -7,9 +10,11 @@ export const Artists = ({images, name, followers, id, fetchArtistAlbums }) => {
           <h5 className="card-title ">{name}</h5>  
           <p className="card-title ">Follovers: {followers.total}</p>   
 
-          <button type="button" className="btn btn-primary" onClick={() => fetchArtistAlbums(id) }>Albums</button>   
+          {/* <button type="button" className="btn btn-primary" onClick={() => fetchArtistAlbums(id) }>Albums</button>    */}
 
+          {/* <Link to="/albums" state={id} type="button" className="btn btn-info">Albums</Link> */}
 
+      
     
 
 
