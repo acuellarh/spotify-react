@@ -43,8 +43,8 @@ export const ArtistsContextProvider = ({children}) => {
 
 
 
-  const searchArtists = async () => {
-
+  const searchArtists = async (e) => {
+    e.preventDefault()
     try {       
         const {data} = await axios.get( "https://api.spotify.com/v1/search" , {
           headers: {

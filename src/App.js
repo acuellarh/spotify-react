@@ -7,6 +7,8 @@ import { ArtistsContextProvider } from './context/ArtistsContext';
 import { Navbar } from './components/Navbar';
 import { Search } from './components/Search';
 import { Route, Routes } from 'react-router-dom';
+import { Home } from './pages/Home';
+
 
 
 function App() {  
@@ -14,7 +16,7 @@ function App() {
     <ArtistsContextProvider>
       <Navbar/>
         <Routes>
-          <Route path="/" element={<Search/>}/>
+          <Route path="/" element={<Home/>}/>
         </Routes>         
     </ArtistsContextProvider>
   );
