@@ -1,10 +1,9 @@
 import React, {useContext} from "react"
 import { ArtistsContext } from "../context/ArtistsContext"
-import { Artists } from "./Artists"
 
 export const Search =  () => {
   
-  const {setSearchKey, searchArtists, artists} = useContext(ArtistsContext)
+  const {setSearchKey, searchArtists } = useContext(ArtistsContext)
 
   return (
     <>      
