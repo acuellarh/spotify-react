@@ -1,8 +1,6 @@
 import { createContext, useEffect, useState } from 'react';
 
 import axios from 'axios';
-
-
 export const ArtistsContext = createContext()
 export const ArtistsContextProvider = ({children}) => {
 
@@ -20,6 +18,7 @@ export const ArtistsContextProvider = ({children}) => {
   const [totalPages, setTotalPages] = useState();
   const [next, setNext] = useState("");
   const [previous, setPrevious] = useState("");
+  const [albums, setAlbums] = useState([]);
 
   useEffect(() => {
     const hash = window.location.hash
@@ -94,15 +93,20 @@ export const ArtistsContextProvider = ({children}) => {
   }
 
   const fetchArtistAlbums = async (id) => {
+    console.log(`Soy el id ${id}`)
     try {
       
       const {data} = await axios.get (`https://api.spotify.com/v1/artists/${id}/albums` , {
         headers: {
           Authorization: `Bearer ${token}`
-        }     
-      })
-
+        }, 
+        params: {
+          q: searchKey,
+          include_groups: "album"   
+        }
+      })  
       console.log(data)
+      setAlbums(data.items)  
 
     } catch (error) {
       console.error(error)
@@ -116,20 +120,22 @@ export const ArtistsContextProvider = ({children}) => {
     RESPONSE_TYPE,
     token,
     searchKey,
-    setSearchKey,
     artists,
     total,
     limit,
     page,
-    setPage,
     totalPages,
-    setTotalPages,
     next,
     previous,
+    albums,
+    setSearchKey,
+    setPage,
+    setTotalPages,
     logout,
     searchArtists,
     fetchPaginationArtist,
-    fetchArtistAlbums
+    fetchArtistAlbums,
+    setAlbums
   }
 
   return (

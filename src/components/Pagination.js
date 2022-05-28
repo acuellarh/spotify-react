@@ -21,18 +21,16 @@ export const Pagination = () => {
 
     value === 1 ? fetchPaginationArtist(next) : fetchPaginationArtist(previous)
   }
-
+  
   const cuantityPages = () => {    
     let remainder = total % limit  
     let numberPages = parseInt(total / limit )
     remainder===0 ? setTotalPages(numberPages) :  setTotalPages(numberPages + 1) 
   }  
-
   
   useEffect(() => {
     cuantityPages()        
   }, [total]);
-
 
   return (
     <>
@@ -55,9 +53,6 @@ export const Pagination = () => {
           <p></p>
         } 
       </section> 
-   </> 
-    
-      
-   
+   </>   
   )
 }
