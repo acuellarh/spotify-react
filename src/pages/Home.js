@@ -8,7 +8,7 @@ export const Home = () => {
   return (
     <>
       <Search/>
-      {/* <Pagination/> */}
+      <Pagination/>
       <Artists/>
     </>
   )
