@@ -17,3 +17,4 @@ test('renders Search component without crashing', () => {
   const searchComponent = screen.getByPlaceholderText('Search');
   expect(searchComponent).toBeInTheDocument();
 });
+
