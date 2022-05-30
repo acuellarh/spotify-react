@@ -1,7 +1,10 @@
 import { createContext, useEffect, useState } from 'react';
 
 import axios from 'axios';
+import React from 'react';
+
 export const ArtistsContext = createContext()
+
 export const ArtistsContextProvider = ({children}) => {
 
   const CLIENT_ID = "da41273bb2444d84a74e22c37b8e4554"
@@ -9,7 +12,7 @@ export const ArtistsContextProvider = ({children}) => {
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
   const RESPONSE_TYPE = "token"
 
-  const [token, setToken] = useState("") 
+  const [token, setToken] = useState(false) 
   const [searchKey, setSearchKey] = useState("");
   const [artists, setArtists] = useState([]); 
   const [total, setTotal] = useState("");
@@ -36,11 +39,9 @@ export const ArtistsContextProvider = ({children}) => {
   }, [])
 
   const logout = () => {
-    setToken("")
+    setToken(false)
     window.localStorage.removeItem("token")
   }
-
-
 
   const searchArtists = async (e) => {
     e.preventDefault()
@@ -67,7 +68,6 @@ export const ArtistsContextProvider = ({children}) => {
       console.error(error)
     }    
   }
-
 
   const fetchPaginationArtist = async (url) => {
 
@@ -145,3 +145,5 @@ export const ArtistsContextProvider = ({children}) => {
   )
 
 }
+
+export const useArtistsContext = () => React.useContext(ArtistsContext) 
